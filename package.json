@@ -1,0 +1,38 @@
+{
+  "name": "namste-react",
+  "version": "1.0.0",
+  "description": "This is Namste React by Rahul Gupta",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahul22mrk/namste-react.git"
+  },
+  "keywords": [
+    "react",
+    "namste",
+    "react",
+    "rahul",
+    "gupta"
+  ],
+  "author": "Rahul Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rahul22mrk/namste-react/issues"
+  },
+  "homepage": "https://github.com/rahul22mrk/namste-react#readme",
+  "dependencies": {
+    "namste-react": "file:",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.2",
+    "process": "^0.11.10"
+  },
+  "browserslist": [
+    "last 10 versions"
+  ]
+}
