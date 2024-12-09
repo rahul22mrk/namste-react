@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- saved from url=(0358)https://crcldu.com/mg/ssiframe.html#pb_url=https%3A%2F%2Fs.xlgmedia.com%2F2%2F2.149.0%2F724974%2FAydNetwADG6XVEco%2Fpostback%3Fpd%3Davt%26di%3Dlinkedin.com%26ci%3D724974%26dt%3D7249741698245123882000%26sid%3DAydNetwADG6XVEco%26oz_sc%3D1ea22523a9245b7ecd55a922%26oz_df%3D1733670111097%26oz_l%3D2%26di%3Dlinkedin.com%26ci%3D724974%26dt%3D7249741698245123882000 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>
+<script>
+// Get URL supporting both search and hash
+const urlFragment = location.hash ? location.hash : location.search ? location.search : null;
+const urlParams = urlFragment ? new URLSearchParams(urlFragment.substring(1)) : null;
+const postbackUrl = escape(urlParams.get("pb_url"));
+
+
+async function deviceAge(pd) {
+  const postbackURLs = [];
+  const timeSlots = ["def", "new", "hour", "day", "week", "month", "quarter", "halfyear"];
+  timeSlots.forEach((slot) => postbackURLs.push({url: "postback.html#" + pd + "_timeblock=" + slot + "&pb_url=" + postbackUrl}));
+  
+  try {
+    if (pd === "fs") {
+      sharedStorage.set("ts", Date.now(), {ignoreIfPresent: true}).catch((_e) => {return});
+      await window.sharedStorage.worklet.addModule("ss.js");
+    }
+    const resolveToConfig = window.FencedFrameConfig !== void 0;
+    let opaqueURL = await window.sharedStorage.selectURL(pd, postbackURLs, {resolveToConfig, keepAlive:true, data:{pd : pd}});
+    if (resolveToConfig && opaqueURL instanceof FencedFrameConfig) document.body.appendChild(Object.assign(document.createElement('fencedframe'), {mode: 'opaque-ads', config: opaqueURL}));
+  }
+  catch(e){}
+}
+
+async function main()
+{
+  if (postbackUrl) {
+    await deviceAge("fs");
+    await deviceAge("bd");
+    setTimeout(() => {document.body.replaceChildren()}, 4000);
+  }
+}
+main();
+
+</script>
+</body></html>
