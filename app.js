@@ -56,7 +56,7 @@ const title = (
 const HeadingComponent2 = () => (
     <div id="container">
         <Title/>
-        {Title()}
+        {Title}
         <Title></Title>
         
         {title}
@@ -68,4 +68,4 @@ const HeadingComponent2 = () => (
 const root = ReactDOM.createRoot(document.getElementById("root"));
 //root.render(jsxHeading);
 //heading component rendering
-root.render(<HeadingComponent2/>);
+//root.render(<HeadingComponent2/>);
