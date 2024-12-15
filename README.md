@@ -36,3 +36,34 @@
 - Https
 - Tree Shaking - remove unused code 
 - Different Dev and Prod Bundles
+
+# Namaste Food
+/**
+ * Header
+ *    - logo
+ *    - Nav Items
+ * Body
+ *    - search
+ *    - RestaurantContainer 
+ *        - RestaurantCard  
+ *          - Img
+ *          - Name of Res
+ *          - Start Rating
+ *          - Cuisines 
+ *          - Delivery time etc
+ * Footer
+ *    - Copyright
+ *    - links
+ *    - address
+ *    - contact
+ */
+
+ //not using keys (not acceptable) <<<<< index as key <<<unique id (best practices)
+ 
+                {/* <RestaurantCard 
+                    resName="Meghana Foods" 
+                    cuisine="Hyderabadi Veg Biryani" 
+                    starRating="4.4 Stars" 
+                    deliveryTimes="38 mins"
+                    imgSrc="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/zajzlb10h1bnvrcz7wg0"
+                /> */}
