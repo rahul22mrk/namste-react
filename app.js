@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client"; // React 18+ import
-import logo from './images/logo.jpg';
 /**
  * Header
  *    - logo
@@ -20,12 +19,12 @@ import logo from './images/logo.jpg';
  *    - address
  *    - contact
  */
-
+const logoUrl = "https://media.istockphoto.com/id/981368726/vector/restaurant-food-drinks-logo-fork-knife-background-vector-image.jpg?s=612x612&w=0&k=20&c=9M26CBkCyEBqUPs3Ls5QCjYLZrB9sxwrSFmnAmNCopI=";
 const Header = () =>{
     return (
         <div className="header">
             <div className="logo-container">
-                <img className="logo" src={logo} alt='logo'/>
+                <img className="logo" src={logoUrl} alt='logo'/>
             </div>
             <div className="nav-items">
                 <ul>
@@ -52,7 +51,7 @@ const RestaurantCard = (props) => {
 		avgRating,
 		sla,
 		costForTwo
-	} = resData.card.card.info;
+	} = resData?.card.card.info;
     return (
         <div className="res-card" style={styleCard}>
             <img className="res-logo" alt="res-logo" src={cdnImgUrl+cloudinaryImageId} />

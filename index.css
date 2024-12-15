@@ -6,6 +6,8 @@
     background-color: lavender;
 }
 .logo{
+    padding: 10px;
+    margin: 10px;
     width: 100px;
 }
 
