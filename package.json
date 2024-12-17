@@ -1,6 +1,7 @@
 {
   "name": "namste-react",
   "version": "1.0.0",
+  "private": true,
   "description": "This is Namste React by Rahul Gupta",
   "main": "app.js",
   "scripts": {

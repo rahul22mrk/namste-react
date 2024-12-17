@@ -1,68 +1,60 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { SWIGGY_API_URL } from "../utils/constants";
+import Shimmer from "./Shimmer";
 const Body = () =>{
     //Local state variable -super power variable
-    const [restaurantsList,setListOfRestaurants] =useState(resList);
+    const [allData,setAllData] = useState([]);
+    const [restaurantsList,setListOfRestaurants] =useState(allData);
+    const [filteredRest,setFilteredList] = useState(allData);
+    const [searchText,setSearchText] =  useState("");
     // const arr= useState(resList);
     // const [restaurantsList,setListOfRestaurants] =arr;
     //normal js variable
-    let restaurantsListJs  = [
-			{
-                "card":{
-                    "card": {
-				"info": {
-					"id": "866939",
-					"name": "Punjabi Angithi (Vegorama Group)",
-					"cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/12/11/41b029f5-a3c3-4696-8908-0b83049a997c_58e5b517-2e98-49c3-9992-e78f4e0e14d9.jpeg",
-					"costForTwo": "30000",
-					"cuisines": [
-						"North Indian",
-						"Chinese",
-						"Tandoor"
-					],
-					"avgRating": 4.3,
-					"totalRatingsString": "5.6K+",
-					"sla": {
-						"deliveryTime": 35,
-					},
-				},
-			    }
-                }
-                
-		    },{
-                "card":{
-                    "card": {
-				"info": {
-					"id": "866930",
-					"name": "Dominos",
-					"cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/12/11/41b029f5-a3c3-4696-8908-0b83049a997c_58e5b517-2e98-49c3-9992-e78f4e0e14d9.jpeg",
-					"costForTwo": "30000",
-					"cuisines": [
-						"North Indian",
-						"Chinese",
-						"Tandoor"
-					],
-					"avgRating": 3.8,
-					"totalRatingsString": "5.6K+",
-					"sla": {
-						"deliveryTime": 35,
-					},
-				},
-			    }
-                }
-                
-		    }
-    ];
-    return (
+    let restaurantsListJs  = allData;
+    //use effect
+    useEffect(()=>{
+        fetchData();
+    },[]);
+
+    const fetchData = async () =>{
+        try {
+            const data = await fetch(SWIGGY_API_URL);
+            if (!data.ok) {
+                throw new Error(`HTTP error! Status: ${data.status}`);
+            }
+            const json = await data.json();
+            //optional chaining
+            const cards = json?.data?.cards[0]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards;
+            setAllData(cards);
+            setListOfRestaurants(cards);
+        } catch (error) {
+            console.error("Error fetching or parsing data:", error);
+        }
+        
+    };
+
+    //conditional rendering
+    return restaurantsList.length===0? <Shimmer/> : (
         <div className="body">
             <div className="filter">
+                <div className="search">
+                    <input type="text" className="search-box" value={searchText} onChange={(e)=>{
+                        setSearchText(e.target.value);
+                    }}></input>
+                    <button className="search-btn" onClick={()=>{
+                        const filteredList = allData.filter(
+                            (res) => res.card.card.info.name.toLowerCase().includes(searchText.toLowerCase())
+                        );
+                        setListOfRestaurants(filteredList);
+                    }}>Search</button>
+                </div>
                 <button 
                     className="filter-btn" 
                     onClick={()=>{
                         //filter logic here
                         const filteredList = restaurantsList.filter(
-                            (res) => res.card.card.info.avgRating > 4
+                            (res) => res.card.card.info.avgRating > 4.2
                         );
                         setListOfRestaurants(filteredList);
                     }}
@@ -72,7 +64,7 @@ const Body = () =>{
                 <button 
                     className="filter-all-btn"
                     onClick={()=>{
-                        setListOfRestaurants(resList);
+                        setListOfRestaurants(allData);
                     }}
                 >
                     See All Restaurants
