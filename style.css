@@ -79,3 +79,9 @@
 .filter-all-btn{
     margin: 10px;
 }
+
+a {
+    text-decoration: none; /* Underline hatane ke liye */
+    color: inherit; /* Text ka color inherit karne ke liye */
+  }
+  
