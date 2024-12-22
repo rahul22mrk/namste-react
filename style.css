@@ -85,3 +85,11 @@ a {
     color: inherit; /* Text ka color inherit karne ke liye */
   }
   
+.user-card{
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.user-image{
+    width: 150px;
+}
