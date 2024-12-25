@@ -1,42 +1,20 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState,useEffect } from "react";
-import { SWIGGY_API_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
+import useRestaurants from "../utils/useRestaurants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () =>{
     //Local state variable -super power variable
-    const [allData,setAllData] = useState([]);
-    const [restaurantsList,setListOfRestaurants] =useState(allData);
-    const [filteredRest,setFilteredList] = useState(allData);
     const [searchText,setSearchText] =  useState("");
-    // const arr= useState(resList);
-    // const [restaurantsList,setListOfRestaurants] =arr;
-    //normal js variable
-    let restaurantsListJs  = allData;
-    //use effect
-    useEffect(()=>{
-        fetchData();
-    },[]);
-
-    const fetchData = async () =>{
-        try {
-            const data = await fetch(SWIGGY_API_URL);
-            if (!data.ok) {
-                throw new Error(`HTTP error! Status: ${data.status}`);
-            }
-            const json = await data.json();
-            //optional chaining
-            const cards = json?.data?.cards[0]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards;
-            setAllData(cards);
-            setListOfRestaurants(cards);
-        } catch (error) {
-            console.error("Error fetching or parsing data:", error);
-        }
-        
-    };
+    const {restaurantsList,allData,setListOfRestaurants} = useRestaurants();
+    const onlineStatus = useOnlineStatus();
+    if(onlineStatus===false){
+        return (<h1>Looks like you're offline!! Please check your internet connection!!</h1>);
+    }
 
     //conditional rendering
-    return restaurantsList.length===0? <Shimmer/> : (
+    return (restaurantsList===undefined||restaurantsList.length===0)? <Shimmer/> : (
         <div className="body">
             <div className="filter">
                 <div className="search">

@@ -1,21 +1,10 @@
-import { useEffect,useState } from "react";
 import Shimmer from "./Shimmer";
-import { CDN_IMG_URL,SWIGGY_MENU_URL } from "../utils/constants";
+import { CDN_IMG_URL } from "../utils/constants";
 import { useParams } from "react-router";
-
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 const RestaurantMenu = ()=>{
-    const [restInfo,setRestInfo]= useState(null);
     const {restId} = useParams();
-    useEffect(()=>{
-        fetchRestMenu();
-    },[]);
-    const fetchRestMenu = async ()=>{
-        const restMenuResponse = await fetch(SWIGGY_MENU_URL+restId);
-        const restMenuData= await restMenuResponse.json();
-        console.log("rest dummy data",restMenuData);
-       // const restMenuList = restMenuData?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card.card.itemCards;
-        setRestInfo(restMenuData?.data);
-    };
+    const restInfo=useRestaurantMenu(restId);
     if(restInfo===null){
         return <Shimmer/>;
     }
@@ -31,7 +20,7 @@ const RestaurantMenu = ()=>{
         sla
     } = restInfo?.cards[2]?.card?.card?.info;
     const{itemCards}=restInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card.card;
-    console.log(itemCards);
+   
     return  (
         <div className="menu">
             <h1>{name}</h1>
@@ -44,12 +33,11 @@ const RestaurantMenu = ()=>{
             <ul>
                 {
                     itemCards.map(item => 
-                    <li key="item?.card?.info?.id">
+                    <li key={item?.card?.info?.id}>
                         {item?.card?.info?.name} - Rs.  {item?.card?.info?.price/100}
                     </li>)
                 }
             </ul>
-           
         </div>
     );
 }
