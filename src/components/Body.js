@@ -16,20 +16,21 @@ const Body = () =>{
     //conditional rendering
     return (restaurantsList===undefined||restaurantsList.length===0)? <Shimmer/> : (
         <div className="body">
-            <div className="filter">
-                <div className="search">
-                    <input type="text" className="search-box" value={searchText} onChange={(e)=>{
+            <div className="filter flex">
+                <div className="search m-4 p-4">
+                    <input type="text" className="border border-solid border-black " value={searchText} onChange={(e)=>{
                         setSearchText(e.target.value);
                     }}></input>
-                    <button className="search-btn" onClick={()=>{
+                    <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={()=>{
                         const filteredList = allData.filter(
                             (res) => res.card.card.info.name.toLowerCase().includes(searchText.toLowerCase())
                         );
                         setListOfRestaurants(filteredList);
                     }}>Search</button>
                 </div>
+                <div className="m-4 p-4 flex items-center">
                 <button 
-                    className="filter-btn" 
+                    className="px-4 py-2 bg-green-100 rounded-lg" 
                     onClick={()=>{
                         //filter logic here
                         const filteredList = restaurantsList.filter(
@@ -40,17 +41,21 @@ const Body = () =>{
                 >
                     Top Rated Restaurants
                 </button>
-                <button 
-                    className="filter-all-btn"
+                </div>
+             <div className="m-4 p-4 flex items-center">
+             <button 
+                    className="px-4 py-2 bg-green-100 rounded-lg"
                     onClick={()=>{
                         setListOfRestaurants(allData);
                     }}
                 >
                     See All Restaurants
                 </button>
+             </div>
+                
             </div>
             
-            <div className="res-container">
+            <div className=" flex flex-wrap">
 				{
 					restaurantsList.map((restaurant,index)=>
 					(
