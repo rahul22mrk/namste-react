@@ -1,18 +1,23 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState,useEffect } from "react";
+import RestaurantCard,{withPromotedLabel} from "./RestaurantCard";
+import { useState,useEffect,useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useRestaurants from "../utils/useRestaurants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Body = () =>{
+    const {setUserName,loggedInUser}=useContext(UserContext);
     //Local state variable -super power variable
     const [searchText,setSearchText] =  useState("");
     const {restaurantsList,allData,setListOfRestaurants} = useRestaurants();
     const onlineStatus = useOnlineStatus();
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
     if(onlineStatus===false){
         return (<h1>Looks like you're offline!! Please check your internet connection!!</h1>);
     }
+    const userChangeHandle =  ()=>{
 
+    }
     //conditional rendering
     return (restaurantsList===undefined||restaurantsList.length===0)? <Shimmer/> : (
         <div className="body">
@@ -52,6 +57,13 @@ const Body = () =>{
                     See All Restaurants
                 </button>
              </div>
+             <div className="m-4 p-4 flex items-center">
+                <label>User Name : </label>
+                <input type="text"
+                    value={loggedInUser}  
+                    className="border border-black m-2 p-2" 
+                    onChange={(e)=>setUserName(e.target.value)}></input>
+             </div>
                 
             </div>
             
@@ -60,7 +72,11 @@ const Body = () =>{
 					restaurantsList.map((restaurant,index)=>
 					(
                         <Link key={restaurant.card.card.info.id}  to={"restaurants/"+restaurant.card.card.info.id}>
-                            <RestaurantCard  resData={restaurant} />
+                            {/**if the restaurant is promoted the  we will show promoted label */   
+                            }
+                            {restaurant.card.card.info.promoted?
+                            <RestaurantCardPromoted resData={restaurant}/> 
+                            : <RestaurantCard  resData={restaurant} /> }
                         </Link>
                     ))
 				}
