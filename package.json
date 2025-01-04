@@ -27,12 +27,14 @@
   },
   "homepage": "https://github.com/rahul22mrk/namste-react#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "dom": "^0.0.3",
     "express": "^4.21.2",
     "namste-react": "file:",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-router": "^7.1.0"
   },
   "devDependencies": {
